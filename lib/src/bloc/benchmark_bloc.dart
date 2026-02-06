@@ -232,8 +232,10 @@ class BenchmarkBloc extends Bloc<BenchmarkEvent, BenchmarkState> {
 
     try {
       await _runningOp!.value;
-    } catch (e) {
-      // ✅ cancellation-safe, version-safe
+    } catch (e, st) {
+      // ignore: avoid_print
+      print("BENCHMARK ERROR: $e\n$st");
+
       if (_runningOp?.isCanceled == true) {
         emit(
           state.copyWith(
